@@ -1,0 +1,51 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Kanit", sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: yellow;
+}
+
+#user-input {
+  margin: 10px;
+  border-radius: 10px;
+}
+
+label {
+  font-family: "Kanit", sans-serif;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #FEF9F2;
+  color: black;
+  width: 100px;
+  height: 50px;
+  font-size: 1.2rem;
+  margin: 5px;
+}
+
+.info-container {
+  width: 100%;
+  overflow: auto;
+  white-space: nowrap;
+  margin-top: 20px;
+}
+
+.weather-info {
+  display: inline-block;
+  width: 200px;
+  height: 500px;
+  background-color: #87A2FF;
+  margin: 20px;
+  border-radius: 20px;
+}
