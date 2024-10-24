@@ -48,4 +48,6 @@ label {
   background-color: #87A2FF;
   margin: 20px;
   border-radius: 20px;
+  padding: 20px;
+  vertical-align: top;
 }
