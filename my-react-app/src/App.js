@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import config from './config';
+import weatherCode from './weather';
 
 const checkCity = async (url) => {
   let options = {
@@ -21,7 +22,6 @@ const checkCity = async (url) => {
 }
 
 const fetchWeather = async (url) => {
-  const weatherKey = config.WEATHER_KEY;
   try {
     const res = await fetch(url);
     const data = await res.json();
@@ -55,7 +55,7 @@ class App extends React.Component {
       return;
     }
     const cityObj = await checkCity(`https://api.api-ninjas.com/v1/city?name=${this.state.input}`);
-    const city = cityObj[0]["name"].toLowerCase();
+    const city = cityObj[0].name.toLowerCase();
     let isCityGood = false;
     if (city === this.state.input.toLowerCase()) {
       isCityGood = true;
@@ -64,16 +64,28 @@ class App extends React.Component {
       return;
     }
     if (isCityGood) {
-      const allContainers = document.getElementsByClassName("weather-info");
       document.getElementById("container").hidden = false;
-      const location = await fetchWeather(`https://api.openweathermap.org/geo/1.0/direct?q=${this.state.input}&limit=5&appid=ec3c55e16c1a877d14b0b59f018d6438`);
+      document.getElementById("container").innerHTML = "";
+      const location = await fetchWeather(`https://api.openweathermap.org/geo/1.0/direct?q=${this.state.input}&limit=5&appid=${config.WEATHER_KEY}`);
       const locationObj = {
-        lat: location[0]["lat"],
-        long: location[0]["lon"]
+        lat: location[0].lat,
+        long: location[0].lon
       }
       const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${locationObj.lat}&lon=${locationObj.long}&exclude=current,minutely,hourly,alerts&units=imperial&appid=${config.WEATHER_KEY}`;
       const weather = await fetchWeather(weatherUrl);
-      allContainers[0].textContent = weather["daily"].length;
+      for (let i = 0; i < weather.daily.length; i++) {
+        const dateObj = new Date(weather.daily[i].dt * 1000);
+        const date = `${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`
+        const summary = weather.daily[i].summary;
+        const weatherInfo = weather.daily[i].weather[0].id;
+        
+        document.getElementById("container").innerHTML += 
+        `<div class="weather-info">
+          <h2>${date}</h2>
+          <p>${summary}</p>
+          ${weatherCode[weatherInfo.toString()]}
+        </div>`;
+      }
     }
   }
 
@@ -82,10 +94,7 @@ class App extends React.Component {
       input: "",
     });
     document.getElementById("container").hidden = true;
-    const allContainers = document.getElementsByClassName("weather-info");
-    for (let i = 0; i < allContainers.length; i++) {
-      allContainers[i].textContent = "";
-    }
+    document.getElementById("container").innerHTML = "";
   }
 
   render() {
@@ -99,20 +108,6 @@ class App extends React.Component {
           <button onClick={this.clearContainer} className="col btn btn-lg btn-primary">Clear</button>
         </div>
         <div id="container" className="info-container">
-          <div className="weather-info">lmao</div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
-          <div className="weather-info"></div>
         </div>
       </div>
     );

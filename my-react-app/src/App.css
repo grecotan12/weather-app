@@ -43,11 +43,25 @@ label {
 
 .weather-info {
   display: inline-block;
-  width: 200px;
+  width: 250px;
   height: 500px;
   background-color: #87A2FF;
   margin: 20px;
   border-radius: 20px;
   padding: 20px;
   vertical-align: top;
+}
+
+.weather-info p {
+  word-break: normal;
+  white-space: normal;
+  width: 200px;
+  color: white;
+  height: 50px;
+}
+
+.icon {
+  position: relative;
+  left: 25%;
+  top: 20%;
 }
