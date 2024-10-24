@@ -2,11 +2,14 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 
+var cityKey = config.CITY_KEY;
+var weatherKey = config.WEATHER_KEY;
+
 const checkCity = async (url) => {
   let options = {
     method: 'GET',
     headers: {
-      'x-api-key': 'lqvRzZoD0+4ebK430HBokw==7D9TitOUZ4VoYZGO'
+      'x-api-key': cityKey
     }
   }
   try {
@@ -69,7 +72,7 @@ class App extends React.Component {
         lat: location[0]["lat"],
         long: location[0]["lon"]
       }
-      const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${locationObj.lat}&lon=${locationObj.long}&exclude=current,minutely,hourly,alerts&units=imperial&appid=ec3c55e16c1a877d14b0b59f018d6438`;
+      const weatherUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${locationObj.lat}&lon=${locationObj.long}&exclude=current,minutely,hourly,alerts&units=imperial&appid=${weatherKey}`;
       const weather = await fetchWeather(weatherUrl);
       allContainers[0].textContent = weather["daily"].length;
     }
